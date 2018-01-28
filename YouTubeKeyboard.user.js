@@ -14,7 +14,7 @@
     function searchVideoPlayer() {
         let videoFrame = document.getElementsByClassName("html5-video-player")[0];
         let searchInput =  document.getElementById("search-input");
-        
+
         if (videoFrame != null && searchInput != null) {
             videoFrame.focus();
 
@@ -28,7 +28,7 @@
                 if (document.activeElement != videoFrame) {
                     videoFrame.focus();
                 }
-            }
+            };
         } else {
             setTimeout(searchVideoPlayer, 500);
         }
