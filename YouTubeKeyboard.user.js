@@ -4,8 +4,7 @@
 // @version      1.0
 // @description  Auto focus (and keep focused) on video player to make keyboard shortcuts work correctly.
 // @author       D'n Domo
-// @match        *://*.youtube.com/*
-// @match        *://*.youtu.be/*
+// @match        *://*.youtube.com/watch*
 // @grant        none
 // ==/UserScript==
 
@@ -14,11 +13,22 @@
 
     function searchVideoPlayer() {
         let videoFrame = document.getElementsByClassName("html5-video-player")[0];
-        if (videoFrame != null) {
+        let searchInput =  document.getElementById("search-input");
+        
+        if (videoFrame != null && searchInput != null) {
             videoFrame.focus();
+
             videoFrame.onblur = function() {
-                videoFrame.focus();
+                if (document.activeElement != searchInput) {
+                    videoFrame.focus();
+                }
             };
+
+            searchInput.onblur = function() {
+                if (document.activeElement != videoFrame) {
+                    videoFrame.focus();
+                }
+            }
         } else {
             setTimeout(searchVideoPlayer, 500);
         }
