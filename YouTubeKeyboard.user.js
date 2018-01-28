@@ -12,16 +12,16 @@
     'use strict';
 
     let timeout = 500;
-    let videoFrame;
+    let videoPlayer;
 
     function searchVideoPlayer() {
-        videoFrame = document.getElementsByClassName("html5-video-player")[0];
+        videoPlayer = document.getElementsByClassName("html5-video-player")[0];
 
-        if (videoFrame != null) {
-            videoFrame.onblur = function () {
+        if (videoPlayer != null) {
+            videoPlayer.focus();
+            videoPlayer.onblur = function () {
                 refocus();
             };
-            refocus();
         } else {
             setTimeout(searchVideoPlayer, timeout);
         }
@@ -30,14 +30,14 @@
     function refocus() {
         setTimeout(function () {
             let currentElement = document.activeElement;
-            if (currentElement != videoFrame) {
+            if (currentElement != videoPlayer) {
                 if (currentElement.tagName == "INPUT" || currentElement.tagName == "TEXTAREA") {
                     currentElement.onblur = function () {
                         refocus();
                     };
                 }
                 else {
-                    videoFrame.focus();
+                    videoPlayer.focus();
                 }
             }
         }, timeout);
