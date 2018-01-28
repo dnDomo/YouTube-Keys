@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YouTube Keyboard Shortcuts
 // @namespace    https://github.com/dnDomo
-// @version      1.0
+// @version      1.1
 // @description  Auto focus (and keep focused) on video player to make keyboard shortcuts work correctly.
 // @author       D'n Domo
 // @match        *://*.youtube.com/watch*
