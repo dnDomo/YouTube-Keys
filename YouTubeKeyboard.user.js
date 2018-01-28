@@ -8,30 +8,39 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
+    let timeout = 500;
+    let videoFrame;
+
     function searchVideoPlayer() {
-        let videoFrame = document.getElementsByClassName("html5-video-player")[0];
-        let searchInput =  document.getElementById("search-input");
+        videoFrame = document.getElementsByClassName("html5-video-player")[0];
 
-        if (videoFrame != null && searchInput != null) {
-            videoFrame.focus();
-
-            videoFrame.onblur = function() {
-                if (document.activeElement != searchInput) {
-                    videoFrame.focus();
-                }
+        if (videoFrame != null) {
+            videoFrame.onblur = function () {
+                refocus();
             };
-
-            searchInput.onblur = function() {
-                if (document.activeElement != videoFrame) {
-                    videoFrame.focus();
-                }
-            };
+            refocus();
         } else {
-            setTimeout(searchVideoPlayer, 500);
+            setTimeout(searchVideoPlayer, timeout);
         }
+    }
+
+    function refocus() {
+        setTimeout(function () {
+            let currentElement = document.activeElement;
+            if (currentElement != videoFrame) {
+                if (currentElement.tagName == "INPUT" || currentElement.tagName == "TEXTAREA") {
+                    currentElement.onblur = function () {
+                        refocus();
+                    };
+                }
+                else {
+                    videoFrame.focus();
+                }
+            }
+        }, timeout);
     }
 
     searchVideoPlayer();
